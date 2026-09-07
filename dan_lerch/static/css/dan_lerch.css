@@ -1,0 +1,17 @@
+body {background-color: #000;}
+#filterByDate {background-color: #000;}
+a, p, h1, h2, h3, h4, h5, h6, div, i {color: #f0f3f4;}
+h2 a {text-decoration: none; color: #589fb4;}
+
+.side {
+padding: 14px;
+border-color: #f0f3f4;
+background-color: rgba(255,255,255,0.1);
+}
+
+.btn-primary {background-color: #589fb4; color: #000; border-color: #589fb4;}
+.btn:hover {background-color: #005973; color: #f0f3f4; border-color: #005973;}
+.screen-only {position: absolute; clip: rect(0,0,0,0);}
+.sm-icon {font-size: 25px;}
+#socialLinks img.sm-icon {padding-top: 6px !important;}
+a.blog_page_highlighted {font-weight: bold;}

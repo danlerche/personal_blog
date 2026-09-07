@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags blog_tags %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+<!--
+<div class="main-title mt-4 mb-4">
+    <h1>{{ page.title }}</h1>
+</div>
+-->
+<!--<div class="lead">{{ page.intro|richtext }}</div>-->
+
+<div id="blogItems" class="col-md-10 col-12">
+{% for blog_items in blog_items %}
+<div class="blog_items row border-bottom mb-3">
+<div class="col mb-3 d-none d-sm-block">
+ {% image blog_items.blog_image class="img-fluid" fill-240x175-c100 %}
+</div>
+<div class="col mb-3 d-block d-sm-none">
+ {% image blog_items.blog_image class="img-fluid" fill-570x330-c100 %}
+</div>
+<div class="col-md-9">
+<h2><a href="{{ blog_items.url }}">{{ blog_items.title }}</a></h2>
+<div class="blog-date fw-bold"><i class="bi bi-clock"></i> {{ blog_items.blog_date }}</div>
+{% for block in blog_items.content %}
+{% if not blog_items.blog_teaser %}
+{% if block.block_type == 'paragraph' and forloop.first %}
+<p class="mt-2">{{ block|striptags|first_sentence }}.</p>
+{% endif %}
+{% endif %}
+{% endfor %}
+{% if blog_items.blog_teaser %}
+<p class="mt-2">{{ blog_items.blog_teaser }}</p>
+{% endif %}
+<a href="{{ blog_items.url }}" aria-label="Read more about {{ blog_items.title }}" class="btn btn-primary mb-2">Read More</a>
+</div>
+</div>
+{% endfor %}
+</div>
+
+
+<div id="filterByDate" class="col-md-2 d-none d-sm-block">
+<div class="side border-dark rounded">
+<h2 class="fw-bold">DATE</h2>
+<ul class="bd-highlight">
+<li><a id="all" class="year-filter" href="/">All</a></li>
+{% for cty in blog_count_by_year %}
+<li><a class="year-filter" href="?year={{ cty.year }}">{{ cty.year }} ({{ cty.count }})</a></li>
+{% endfor %}
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+
+<script> 
+	 var url_value = "{{ url_value }}";
+	 if (url_value != "None") {
+	 	current_url = '?year=' + url_value;
+	 	$('.year-filter').each(function() {
+        // Get the href attribute value of each anchor element
+        var href = $(this).attr('href');
+        if (current_url === href) { 
+        	$(this).addClass('blog_page_highlighted');
+
+    }       
+    });
+	 }
+	 else if (url_value == "None") {
+	 	var all = document.getElementById("all");
+	 	all.classList.add('blog_page_highlighted');
+
+	 }
+
+</script>
+
+{% endblock %}

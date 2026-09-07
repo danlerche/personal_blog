@@ -1,0 +1,9 @@
+beautifulsoup4
+django-otp
+gunicorn
+psycopg-binary
+psycopg2-binary
+python-decouple
+wagtail==7.4.2
+#wagtail-2fa
+django_bootstrap5

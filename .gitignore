@@ -1,0 +1,7 @@
+/media/
+/dan_lerch/settings/production.py
+/dan_lerch/settings/base.py
+/.env
+/static/
+!/dan_lerch/static
+.env

@@ -1,0 +1,30 @@
+danlerch.ca {
+    # Increase maximum upload body size for Wagtail media (matches client_max_body_size 10M)
+    request_body {
+        max_size 10MB
+    }
+
+    # Silence logs for missing favicon (optional mirror of Nginx config)
+    @favicon path /favicon.ico
+    log_skip @favicon
+
+    # Serve static files directly from volume
+    handle_path /static/* {
+        root * /var/www/static
+        file_server
+    }
+
+    # Serve media files directly from volume
+    handle_path /media/* {
+        root * /var/www/media
+        file_server
+    }
+
+    # Proxy all other dynamic requests to Gunicorn / Wagtail
+    reverse_proxy web:8000 {
+        # Pass real client information headers (similar to include proxy_params)
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}

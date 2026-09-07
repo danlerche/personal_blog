@@ -1,0 +1,33 @@
+{% extends "wagtailadmin/login.html" %}
+{% load i18n %}
+
+{% block extra_css %}
+{{ block.super }}
+<style>
+    /* Hide Wagtail's default submit button row entirely */
+    .footer, button[type="submit"], input[type="submit"] {
+        display: none !important;
+    }
+    /* Fix form card inner spacing so it hugs the button nicely */
+    .human-input-section {
+        padding-top: 0 !important;
+        margin-top: 10px !important;
+    }
+</style>
+{% endblock %}
+
+{% block branding_login %}
+<h1>{% trans "Sign in to Wagtail" %}</h1>
+{% endblock %}
+
+{% block login_form %}
+<div class="human-input-section" style="text-align: center;">
+    <p style="margin-bottom: 20px; color: #a0a0a0; font-size: 14px; line-height: 1.4;">
+        {% trans "Administrative access is managed securely through your identity provider." %}
+    </p>
+    
+    <a href="/oidc/authenticate/" class="button button-longprocess" style="display: block; width: 100%; text-align: center; box-sizing: border-box; line-height: normal; padding: 12px 0;">
+        {% trans "Sign In" %}
+    </a>
+</div>
+{% endblock %}

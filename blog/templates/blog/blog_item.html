@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags blog_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div id="contentArea" class="content col-12">
+            
+            <hgroup class="person main-title mt-4 mb-4">
+                <h1>{{ page.title }}</h1>
+                <div class="position-title fw-bold">{{ page.blog_date }}</div>
+            </hgroup>
+
+            {# Main Featured Image #}
+            <div class="row mb-2">
+                <div class="col-md-4 col-12">
+                    <a href="{{ page.blog_image.file.url }}" target="_blank">
+                        {% image page.blog_image width-440 class="img-fluid" %}
+                    </a>
+                </div>
+                
+                <div class="col-md-8 col-12 mt-4">
+                    {{ page.blog_body|richtext }}
+                </div>
+            </div>
+
+            {# StreamField Content #}
+            <div class="row">
+                <div class="col-md-12">
+                    {% for block in page.content %}
+                        
+                        {% if block.block_type == 'paragraph' %}
+                            {% include_block block %}
+                        
+                        {% elif block.block_type == 'quote_block' %}
+                            <div id="blogItemBlockQuote" class="mt-4">
+                                <blockquote>&quot;{{ block.value.quote }}&quot; - {{ block.value.attribution }}</blockquote>
+                            </div>
+                        
+                        {% elif block.block_type == 'image' %}
+                        <div class="my-4">
+                          <a href="{{ block.value.file.url }}" class="glightbox" data-gallery="blog-gallery">
+                              {% image block.value width-800 class="img-fluid" %}
+                          </a>
+                        </div>
+                        {% elif block.block_type == 'code_snippet' %}
+                            <div class="box my-4">
+                                <pre>
+                                    <code class="language-html">{{ block.value }}</code>
+                                </pre>
+                            </div>
+                        
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="offset-md-4 mt-4">
+                <a href="/">Back to the home page</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
