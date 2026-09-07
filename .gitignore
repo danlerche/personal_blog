@@ -5,3 +5,4 @@
 /static/
 !/dan_lerch/static
 .env
+Caddyfile
